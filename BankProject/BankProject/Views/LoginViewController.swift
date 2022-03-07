@@ -15,8 +15,13 @@ class LoginViewController: UIViewController {
     
     private let presenter = LoginPresenter()
     
+    var users = [User]()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter.getLogin()
 
         loginButton.layer.cornerRadius = 5
         loginButton.layer.shadowColor = UIColor(named: "BankBlue")?.cgColor
@@ -25,11 +30,23 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func login(_ sender: Any) {
-        if presenter.verifyLogin(userTextField.text ?? "_", passwordTextField.text ?? "_") {
-            let home = HomeViewController(nibName: "HomeViewController", bundle: nil)
-        }
-        //let home = HomeViewController(nibName: "HomeViewController", bundle: nil)
+        let verify = presenter.verifyLogin(userTextField.text ?? "_", passwordTextField.text ?? "_")
         
+        if verify.keys.contains(true) {
+            print("Passed: \(true)")
+            let home = HomeViewController(nibName: "HomeViewController", bundle: nil)
+            home.modalPresentationStyle = .fullScreen
+            home.currentUser = verify.first?.value
+            present(home, animated: true)
+            
+            //navigationController?.pushViewController(home, animated: true)
+        } else {
+            presenter.alertError("Dados inválidos, preencha os campos corretamente")
+        }
+    }
+    
+    func verifyUser(_ users: [User]){
+        self.users = users
     }
     
     /*

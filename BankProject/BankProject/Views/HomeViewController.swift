@@ -17,21 +17,29 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var currentUser: User!
     var bills = [Bill]()
     
     private let presenter = HomePresenter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        bills = currentUser.bills
+        usersName.text = currentUser.name
+        accountNumber.text = String(currentUser.accountNumber)
+        balance.text = "R$\(currentUser.balance)"
         // Presenter
         presenter.setViewDelegate(delegate: self)
-        presenter.getBills()
+        presenter.getBills(currentUser)
         
         //register cell
         //collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: collectionViewCellId)
         presenter.initCollectionView(nibName: "CollectionViewCell" ,collectionView: collectionView, cellId: collectionViewCellId)
         
+    }
+    
+    @IBAction func logout(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
     func presentBills(bills: [Bill]) {
@@ -41,6 +49,8 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
             self.collectionView.reloadData()
         }
     }
+    
+    
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

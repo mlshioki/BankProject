@@ -11,5 +11,5 @@ struct Bill: Codable {
     var name: String?
     var date: String?
     var value: String?
-    var id: UUID
+    var id: Int
 }

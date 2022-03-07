@@ -15,6 +15,6 @@ struct User: Codable {
     let password: String
     let accountNumber: Int
     let balance: Double
-    let id: UUID
+    let id: Int
     let bills: [Bill]
 }
