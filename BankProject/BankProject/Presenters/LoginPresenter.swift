@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol LoginPresenterDelegate: NSObjectProtocol {
-    func verifyUsers(_ users: [User])
+    //func verifyUsers(_ users: [User])
 }
 
 typealias LoginPresentDelegate = LoginPresenterDelegate & UIViewController
@@ -25,7 +25,7 @@ class LoginPresenter {
             guard let data = data, error == nil else { return }
             do {
                 let users = try JSONDecoder().decode([User].self, from: data)
-                self?.delegate?.verifyUsers(users)
+                //self?.delegate?.verifyUsers(users)
                 self?.allUsers = users
             }
             catch {

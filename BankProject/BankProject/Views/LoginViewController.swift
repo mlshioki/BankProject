@@ -15,9 +15,7 @@ class LoginViewController: UIViewController {
     
     private let presenter = LoginPresenter()
     
-    var users = [User]()
-    
-    
+    //var users = [User]()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,16 +36,15 @@ class LoginViewController: UIViewController {
             home.modalPresentationStyle = .fullScreen
             home.currentUser = verify.first?.value
             present(home, animated: true)
-            
-            //navigationController?.pushViewController(home, animated: true)
         } else {
+            print("entrei")
             presenter.alertError("Dados inválidos, preencha os campos corretamente")
         }
     }
     
-    func verifyUser(_ users: [User]){
+    /*func verifyUser(_ users: [User]){
         self.users = users
-    }
+    }*/
     
     /*
     // MARK: - Navigation

@@ -26,7 +26,7 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
         super.viewDidLoad()
         bills = currentUser.bills
         usersName.text = currentUser.name
-        accountNumber.text = String(currentUser.accountNumber)
+        accountNumber.text = presenter.formatAcc(String(currentUser.accountNumber))
         balance.text = "R$\(currentUser.balance)"
         // Presenter
         presenter.setViewDelegate(delegate: self)
@@ -34,7 +34,7 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
         
         //register cell
         //collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: collectionViewCellId)
-        presenter.initCollectionView(nibName: "CollectionViewCell" ,collectionView: collectionView, cellId: collectionViewCellId)
+        presenter.initCollectionView("CollectionViewCell", collectionView, collectionViewCellId)
         
     }
     
@@ -49,8 +49,6 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
             self.collectionView.reloadData()
         }
     }
-    
-    
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -74,7 +72,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let bill = bills[indexPath.row]
-        presenter.didTap(bill: bill)
+        presenter.didTap(bill)
         print (bill.name as Any)
     }
     

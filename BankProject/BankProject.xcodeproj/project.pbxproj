@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9708948E27D65FA2008B9621 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708948D27D65FA2008B9621 /* LoginTests.swift */; };
 		97310D6627BE7F1B0092143F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97310D6527BE7F1B0092143F /* AppDelegate.swift */; };
 		97310D6827BE7F1B0092143F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97310D6727BE7F1B0092143F /* SceneDelegate.swift */; };
 		97310D6F27BE7F1C0092143F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97310D6E27BE7F1C0092143F /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9708948D27D65FA2008B9621 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		97310D6227BE7F1B0092143F /* BankProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BankProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97310D6527BE7F1B0092143F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97310D6727BE7F1B0092143F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				97310D7C27BE7F1C0092143F /* BankProjectTests.swift */,
+				9708948D27D65FA2008B9621 /* LoginTests.swift */,
 			);
 			path = BankProjectTests;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97310D7D27BE7F1C0092143F /* BankProjectTests.swift in Sources */,
+				9708948E27D65FA2008B9621 /* LoginTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
