@@ -33,7 +33,6 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
         presenter.getBills(currentUser)
         
         //register cell
-        //collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: collectionViewCellId)
         presenter.initCollectionView("CollectionViewCell", collectionView, collectionViewCellId)
         
     }
