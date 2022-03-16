@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 protocol LoginPresenterDelegate: NSObjectProtocol {
-    //func verifyUsers(_ users: [User])
+    func hasUser(_ hasUser: Bool, _ user: User?)
+    func showAlert(_ message: String)
 }
 
 typealias LoginPresentDelegate = LoginPresenterDelegate & UIViewController
@@ -17,16 +18,23 @@ typealias LoginPresentDelegate = LoginPresenterDelegate & UIViewController
 class LoginPresenter {
     
     weak var delegate: LoginPresentDelegate?
-    var allUsers: [User] = []
+    let api = APIService()
+    public var allUsers: [User] = []
+    
+    public func setViewDelegate(delegate: LoginPresentDelegate) {
+        self.delegate = delegate
+    }
     
     public func getLogin(){
+        //let users = api.usersRequest()
+        //allUsers = users
+        
         guard let url = URL(string: "https://my-bankproj-api.herokuapp.com/users") else { return }
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let data = data, error == nil else { return }
             do {
-                let users = try JSONDecoder().decode([User].self, from: data)
-                //self?.delegate?.verifyUsers(users)
-                self?.allUsers = users
+                self?.allUsers = try JSONDecoder().decode([User].self, from: data)
+                
             }
             catch {
                  print(error)
@@ -35,7 +43,7 @@ class LoginPresenter {
         task.resume()
     }
     
-    public func verifyLogin(_ user: String, _ password: String) -> [Bool: User?] {
+    public func verifyLogin(_ user: String, _ password: String){
         var validation = false
         var currentUser: User?
         
@@ -45,6 +53,8 @@ class LoginPresenter {
                 currentUser = allUsers[i]
             }
         }
+        
+        delegate?.hasUser(validation, currentUser)
         
         /*let pw = NSPredicate(format: "SELF MATCHES %@ ", "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z]).{6,}$")
         if user != "_" && password != "_" {
@@ -60,15 +70,6 @@ class LoginPresenter {
         }
         print("Password passed : \(validation)")*/
         
-        return [validation: currentUser]
-    }
-    
-    public func alertError(_ message: String){
-        let title = "Login inválido"
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        delegate?.present(alert, animated: true)
     }
     
 }

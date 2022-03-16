@@ -7,12 +7,16 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, BankPresenterDelegate {
+protocol HomeProtocol {
+    var bills: [Bill] { get set }
     
+}
+
+class HomeViewController: UIViewController, BankPresenterDelegate, HomeProtocol {
     
-    @IBOutlet weak var usersName: UILabel!
-    @IBOutlet weak var accountNumber: UILabel!
-    @IBOutlet weak var balance: UILabel!
+    @IBOutlet weak var usersNameLabel: UILabel!
+    @IBOutlet weak var accountNumberLabel: UILabel!
+    @IBOutlet weak var balanceLabel: UILabel!
     let collectionViewCellId = "billCell"
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -24,16 +28,19 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bills = currentUser.bills
-        usersName.text = currentUser.name
-        accountNumber.text = presenter.formatAcc(String(currentUser.accountNumber))
-        balance.text = "R$\(currentUser.balance)"
-        // Presenter
+        
+        //presenter
         presenter.setViewDelegate(delegate: self)
         presenter.getBills(currentUser)
         
+        //set user data
+        bills = currentUser.bills
+        usersNameLabel.text = "Olá, \(currentUser.name)!"
+        accountNumberLabel.text = presenter.formatAcc(String(currentUser.accountNumber))
+        balanceLabel.text = "R$\(currentUser.balance)"
+        
         //register cell
-        presenter.initCollectionView("CollectionViewCell", collectionView, collectionViewCellId)
+        initCollectionView("CollectionViewCell", collectionView, collectionViewCellId)
         
     }
     
@@ -47,6 +54,18 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
+    }
+    
+    func showAlert(_ title: String, _ message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    func initCollectionView(_ nibName: String,_ collectionView: UICollectionView,_ cellId: String){
+        let nibCell = UINib(nibName: nibName, bundle: nil)
+        collectionView.register(nibCell, forCellWithReuseIdentifier: cellId)
+        collectionView.reloadData()
     }
 }
 

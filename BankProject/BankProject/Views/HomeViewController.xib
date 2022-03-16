@@ -11,10 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="BankProject" customModuleProvider="target">
             <connections>
-                <outlet property="accountNumber" destination="M5Z-EW-mot" id="AR5-7f-STo"/>
-                <outlet property="balance" destination="5i4-su-H9A" id="LdZ-pv-eOE"/>
+                <outlet property="accountNumberLabel" destination="M5Z-EW-mot" id="0Wl-GY-QfM"/>
+                <outlet property="balanceLabel" destination="5i4-su-H9A" id="iff-AB-ijl"/>
                 <outlet property="collectionView" destination="0fa-4H-8hy" id="gxM-NM-elz"/>
-                <outlet property="usersName" destination="GXW-I1-uZZ" id="EdV-Bh-oDr"/>
+                <outlet property="usersNameLabel" destination="GXW-I1-uZZ" id="GoX-Jx-e7q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

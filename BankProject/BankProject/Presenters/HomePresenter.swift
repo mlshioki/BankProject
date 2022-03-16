@@ -8,8 +8,9 @@
 import Foundation
 import UIKit
 
-protocol BankPresenterDelegate: NSObjectProtocol {
+protocol BankPresenterDelegate {
     func presentBills(bills: [Bill])
+    func showAlert(_ title: String, _ message: String)
 }
 
 typealias HomePresenterDelegate = BankPresenterDelegate & UIViewController
@@ -41,19 +42,11 @@ class HomePresenter {
         self.delegate = delegate
     }
     
-    public func initCollectionView(_ nibName: String,_ collectionView: UICollectionView,_ cellId: String){
-        let nibCell = UINib(nibName: nibName, bundle: nil)
-        collectionView.register(nibCell, forCellWithReuseIdentifier: cellId)
-        collectionView.reloadData()
-    }
-    
     public func didTap(_ bill: Bill){
-        let title = bill.name
+        let title = bill.name!
         let message = "\(bill.name!) está em R$\(bill.value!)"
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        delegate?.present(alert, animated: true)
+        delegate?.showAlert(title, message)
     }
     
     public func formatAcc(_ accNumber: String) -> String{
@@ -69,7 +62,6 @@ class HomePresenter {
         
         return response
     }
-    
 }
 
 extension StringProtocol {

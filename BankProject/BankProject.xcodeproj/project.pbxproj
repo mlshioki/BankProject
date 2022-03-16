@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9708948E27D65FA2008B9621 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708948D27D65FA2008B9621 /* LoginTests.swift */; };
+		9708949027E0B522008B9621 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9708948F27E0B522008B9621 /* APIService.swift */; };
 		97310D6627BE7F1B0092143F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97310D6527BE7F1B0092143F /* AppDelegate.swift */; };
 		97310D6827BE7F1B0092143F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97310D6727BE7F1B0092143F /* SceneDelegate.swift */; };
 		97310D6F27BE7F1C0092143F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97310D6E27BE7F1C0092143F /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		9708948D27D65FA2008B9621 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
+		9708948F27E0B522008B9621 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		97310D6227BE7F1B0092143F /* BankProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BankProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97310D6527BE7F1B0092143F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97310D6727BE7F1B0092143F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				97310DA327BFDC980092143F /* Presenters */,
 				97310D7027BE7F1C0092143F /* LaunchScreen.storyboard */,
 				97310D7327BE7F1C0092143F /* Info.plist */,
+				9708948F27E0B522008B9621 /* APIService.swift */,
 			);
 			path = BankProject;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				97310DAC27C01DB10092143F /* LoginPresenter.swift in Sources */,
 				97310D6627BE7F1B0092143F /* AppDelegate.swift in Sources */,
 				97310D6827BE7F1B0092143F /* SceneDelegate.swift in Sources */,
+				9708949027E0B522008B9621 /* APIService.swift in Sources */,
 				97310DA727C01D0F0092143F /* UserBillsData.swift in Sources */,
 				97310D9B27BE995A0092143F /* HomeViewController.swift in Sources */,
 				97310DAA27C01DA60092143F /* HomePresenter.swift in Sources */,
