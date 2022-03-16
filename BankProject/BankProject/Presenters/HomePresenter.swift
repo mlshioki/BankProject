@@ -15,7 +15,7 @@ protocol BankPresenterDelegate {
 
 typealias HomePresenterDelegate = BankPresenterDelegate & UIViewController
 
-class HomePresenter {
+class HomePresenter: HomeProtocol {
     
     weak var delegate: HomePresenterDelegate?
     

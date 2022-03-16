@@ -8,11 +8,13 @@
 import UIKit
 
 protocol HomeProtocol {
-    var bills: [Bill] { get set }
-    
+    //var bills: [Bill] { get set }
+    func didTap(_ bill: Bill)
 }
 
-class HomeViewController: UIViewController, BankPresenterDelegate, HomeProtocol {
+typealias homeProtocol = HomeProtocol & UIViewController
+
+class HomeViewController: UIViewController, BankPresenterDelegate {
     
     @IBOutlet weak var usersNameLabel: UILabel!
     @IBOutlet weak var accountNumberLabel: UILabel!
@@ -24,6 +26,7 @@ class HomeViewController: UIViewController, BankPresenterDelegate, HomeProtocol 
     var currentUser: User!
     var bills = [Bill]()
     
+    var delegate: homeProtocol?
     private let presenter = HomePresenter()
     
     override func viewDidLoad() {

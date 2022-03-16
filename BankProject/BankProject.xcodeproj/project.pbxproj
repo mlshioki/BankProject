@@ -96,6 +96,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9708949127E23519008B9621 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				97310D9627BE7FB50092143F /* LoginViewController.xib */,
+				97310D9A27BE995A0092143F /* HomeViewController.xib */,
+				97310D9E27BFD61F0092143F /* CollectionViewCell.xib */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		97310D5927BE7F1A0092143F = {
 			isa = PBXGroup;
 			children = (
@@ -122,8 +132,9 @@
 				97310D6527BE7F1B0092143F /* AppDelegate.swift */,
 				97310D6727BE7F1B0092143F /* SceneDelegate.swift */,
 				97310D6E27BE7F1C0092143F /* Assets.xcassets */,
+				9708949127E23519008B9621 /* Screens */,
 				97310DA227BFDC8D0092143F /* Models */,
-				97310DA127BFDC6B0092143F /* Views */,
+				97310DA127BFDC6B0092143F /* ViewControllers */,
 				97310DA327BFDC980092143F /* Presenters */,
 				97310D7027BE7F1C0092143F /* LaunchScreen.storyboard */,
 				97310D7327BE7F1C0092143F /* Info.plist */,
@@ -150,17 +161,14 @@
 			path = BankProjectUITests;
 			sourceTree = "<group>";
 		};
-		97310DA127BFDC6B0092143F /* Views */ = {
+		97310DA127BFDC6B0092143F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				97310D9527BE7FB50092143F /* LoginViewController.swift */,
-				97310D9627BE7FB50092143F /* LoginViewController.xib */,
 				97310D9927BE995A0092143F /* HomeViewController.swift */,
-				97310D9A27BE995A0092143F /* HomeViewController.xib */,
 				97310D9D27BFD61F0092143F /* CollectionViewCell.swift */,
-				97310D9E27BFD61F0092143F /* CollectionViewCell.xib */,
 			);
-			path = Views;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		97310DA227BFDC8D0092143F /* Models */ = {

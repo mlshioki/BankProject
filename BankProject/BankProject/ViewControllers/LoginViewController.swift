@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LoginProtocol {
-    var api: APIService { get set }
+    
 }
 
 class LoginViewController: UIViewController, LoginPresenterDelegate {
@@ -18,7 +18,7 @@ class LoginViewController: UIViewController, LoginPresenterDelegate {
     @IBOutlet weak var loginButton: UIButton!
     
     private let presenter = LoginPresenter()
-    let api = APIService()
+    //let api = APIService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
