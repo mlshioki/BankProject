@@ -42,7 +42,8 @@ class HomePresenter: HomeProtocol {
         self.delegate = delegate
     }
     
-    public func didTap(_ bill: Bill){
+    func didTap(_ bill: Bill){
+        print("entrei")
         let title = bill.name!
         let message = "\(bill.name!) está em R$\(bill.value!)"
         

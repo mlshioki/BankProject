@@ -8,8 +8,12 @@
 import UIKit
 
 protocol LoginProtocol {
-    
+    func getLogin()
+    func verifyLogin(_ user: String, _ password: String)
+    func setViewDelegate(delegate: LoginPresentDelegate)
 }
+
+typealias loginDelegate = LoginProtocol & UIViewController
 
 class LoginViewController: UIViewController, LoginPresenterDelegate {
     
@@ -17,22 +21,26 @@ class LoginViewController: UIViewController, LoginPresenterDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    private let presenter = LoginPresenter()
-    //let api = APIService()
+    private let presenter = LoginPresenter(users: [User]())
+    weak var delegate: loginDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter.getLogin()
-        presenter.setViewDelegate(delegate: self)
+        delegate?.getLogin()
+        delegate?.setViewDelegate(delegate: self)
+//        presenter.getLogin()
+//        presenter.setViewDelegate(delegate: self)
 
         configButton()
     }
 
     @IBAction func login(_ sender: Any) {
-        presenter.verifyLogin(userTextField.text ?? "_", passwordTextField.text ?? "_")
+        delegate?.verifyLogin(userTextField.text ?? "_", passwordTextField.text ?? "_")
+//        presenter.verifyLogin(userTextField.text ?? "_", passwordTextField.text ?? "_")
     }
     
+    //MARK: - Protocol functions
     func hasUser(_ hasUser: Bool, _ user: User?) {
         if hasUser {
             print("Passed: \(true)")
@@ -45,7 +53,6 @@ class LoginViewController: UIViewController, LoginPresenterDelegate {
         }
     }
     
-    
     func showAlert(_ message: String) {
         let title = "Login inválido"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -53,6 +60,8 @@ class LoginViewController: UIViewController, LoginPresenterDelegate {
         present(alert, animated: true)
     }
     
+    
+    //MARK: - Button configuration
     fileprivate func configButton() {
         loginButton.layer.cornerRadius = 5
         loginButton.layer.shadowColor = UIColor(named: "BankBlue")?.cgColor

@@ -13,37 +13,52 @@ protocol LoginPresenterDelegate: NSObjectProtocol {
     func showAlert(_ message: String)
 }
 
-typealias LoginPresentDelegate = LoginPresenterDelegate & UIViewController
+protocol LoginPresenterDataSource {
+    func usersRequest()
+}
 
-class LoginPresenter {
+typealias LoginPresentDelegate = LoginPresenterDelegate & UIViewController
+typealias LoginPresentDataSource = LoginPresenterDataSource & UIViewController
+
+class LoginPresenter: ApiDataSource, LoginProtocol {
     
     weak var delegate: LoginPresentDelegate?
-    let api = APIService()
-    public var allUsers: [User] = []
+    weak var dataSource: LoginPresentDataSource?
+    //let api = APIService()
+    var allUsers: [User]
     
-    public func setViewDelegate(delegate: LoginPresentDelegate) {
+    init(users: [User]){
+        self.allUsers = users
+    }
+    
+    func setViewDelegate(delegate: LoginPresentDelegate) {
         self.delegate = delegate
     }
     
-    public func getLogin(){
-        //let users = api.usersRequest()
-        //allUsers = users
-        
-        guard let url = URL(string: "https://my-bankproj-api.herokuapp.com/users") else { return }
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data = data, error == nil else { return }
-            do {
-                self?.allUsers = try JSONDecoder().decode([User].self, from: data)
-                
-            }
-            catch {
-                 print(error)
-            }
-        }
-        task.resume()
+    func getLogin(){
+        dataSource?.usersRequest()
+        print("entrei no getLogin")
+
+//        guard let url = URL(string: "https://my-bankproj-api.herokuapp.com/users") else { return }
+//        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+//            guard let data = data, error == nil else { return }
+//            do {
+//                self?.allUsers = try JSONDecoder().decode([User].self, from: data)
+//
+//            }
+//            catch {
+//                 print(error)
+//            }
+//        }
+//        task.resume()
     }
     
-    public func verifyLogin(_ user: String, _ password: String){
+    func getUsers(_ users: [User]) {
+        print(users[0].name)
+        self.allUsers = users
+    }
+    
+    func verifyLogin(_ user: String, _ password: String){
         var validation = false
         var currentUser: User?
         

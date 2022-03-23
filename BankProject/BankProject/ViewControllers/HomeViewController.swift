@@ -8,7 +8,6 @@
 import UIKit
 
 protocol HomeProtocol {
-    //var bills: [Bill] { get set }
     func didTap(_ bill: Bill)
 }
 
@@ -51,6 +50,13 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+    func initCollectionView(_ nibName: String,_ collectionView: UICollectionView,_ cellId: String){
+        let nibCell = UINib(nibName: nibName, bundle: nil)
+        collectionView.register(nibCell, forCellWithReuseIdentifier: cellId)
+        collectionView.reloadData()
+    }
+    
+    //MARK: - Protocol functions
     func presentBills(bills: [Bill]) {
         self.bills = bills
         
@@ -64,14 +70,9 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
-    
-    func initCollectionView(_ nibName: String,_ collectionView: UICollectionView,_ cellId: String){
-        let nibCell = UINib(nibName: nibName, bundle: nil)
-        collectionView.register(nibCell, forCellWithReuseIdentifier: cellId)
-        collectionView.reloadData()
-    }
 }
 
+//MARK: - Extension
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -93,7 +94,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let bill = bills[indexPath.row]
-        presenter.didTap(bill)
+        self.delegate?.didTap(bill)
         print (bill.name as Any)
     }
     
