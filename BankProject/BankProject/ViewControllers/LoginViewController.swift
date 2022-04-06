@@ -8,36 +8,35 @@
 import UIKit
 
 protocol LoginProtocol {
-    func getLogin()
-    func verifyLogin(_ user: String, _ password: String)
-    func setViewDelegate(delegate: LoginPresentDelegate)
+    var allUsers: [User]? { get set }
+    func getLogin() -> [User]
+    func verifyLogin(_ user: String, _ password: String) -> String
+    func setViewDelegate(delegate: LoginPresenterDelegate)
 }
 
-typealias loginDelegate = LoginProtocol & UIViewController
-
 class LoginViewController: UIViewController, LoginPresenterDelegate {
-    
     @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    private let presenter = LoginPresenter(users: [User]())
-    weak var delegate: loginDelegate?
+//    private let presenter = LoginPresenter(users: [User]())
+//    weak var delegate: LoginProtocol
     
+    private var presenter: LoginProtocol?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        delegate?.getLogin()
-        delegate?.setViewDelegate(delegate: self)
-//        presenter.getLogin()
-//        presenter.setViewDelegate(delegate: self)
+        //presenter
+        presenter = LoginPresenter(users: [User]())
+        presenter?.getLogin()
+        presenter?.setViewDelegate(delegate: self)
 
         configButton()
     }
 
     @IBAction func login(_ sender: Any) {
-        delegate?.verifyLogin(userTextField.text ?? "_", passwordTextField.text ?? "_")
-//        presenter.verifyLogin(userTextField.text ?? "_", passwordTextField.text ?? "_")
+        presenter?.verifyLogin(userTextField.text ?? "_", passwordTextField.text ?? "_")
     }
     
     //MARK: - Protocol functions

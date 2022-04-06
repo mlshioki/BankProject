@@ -8,12 +8,15 @@
 import UIKit
 
 protocol HomeProtocol {
-    func didTap(_ bill: Bill)
+    func didTap(_ bill: Bill) -> Bool
+    func getBills(_ user: User) -> [Bill]
+    func formatAcc(_ accNumber: String) -> String
+    func setViewDelegate(delegate: HomePresenterDelegate)
 }
 
-typealias homeProtocol = HomeProtocol & UIViewController
+//typealias homeProtocol = HomeProtocol & UIViewController
 
-class HomeViewController: UIViewController, BankPresenterDelegate {
+class HomeViewController: UIViewController, HomePresenterDelegate {
     
     @IBOutlet weak var usersNameLabel: UILabel!
     @IBOutlet weak var accountNumberLabel: UILabel!
@@ -25,20 +28,21 @@ class HomeViewController: UIViewController, BankPresenterDelegate {
     var currentUser: User!
     var bills = [Bill]()
     
-    var delegate: homeProtocol?
-    private let presenter = HomePresenter()
+    //var delegate: homeProtocol?
+    private var presenter: HomeProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //presenter
-        presenter.setViewDelegate(delegate: self)
-        presenter.getBills(currentUser)
+        presenter = HomePresenter()
+        presenter?.setViewDelegate(delegate: self)
+        presenter?.getBills(currentUser)
         
         //set user data
         bills = currentUser.bills
         usersNameLabel.text = "Olá, \(currentUser.name)!"
-        accountNumberLabel.text = presenter.formatAcc(String(currentUser.accountNumber))
+        accountNumberLabel.text = presenter?.formatAcc(String(currentUser.accountNumber))
         balanceLabel.text = "R$\(currentUser.balance)"
         
         //register cell
@@ -94,7 +98,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let bill = bills[indexPath.row]
-        self.delegate?.didTap(bill)
+        self.presenter?.didTap(bill)
         print (bill.name as Any)
     }
     

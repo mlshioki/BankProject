@@ -8,25 +8,37 @@
 import Foundation
 import UIKit
 
-protocol ApiDataSource {
-    var allUsers: [User] { get set }
-    func getUsers(_ users: [User])
-}
+//typealias apiDelegate = ApiDataSource & UIViewController
 
-typealias apiDelegate = ApiDataSource & UIViewController
-
-class APIService: LoginPresenterDataSource {
+class APIService: LoginPresenterDataSource, HomePresenterDataSource {
     
-    weak var delegate: apiDelegate?
-    
-    func usersRequest(){
+    func usersRequest( callback: @escaping ([User]) -> Void){
         print("entrei no service")
         guard let url = URL(string: "https://my-bankproj-api.herokuapp.com/users") else { return }
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let data = data, error == nil else { return }
             do {
                 let users = try JSONDecoder().decode([User].self, from: data)
-                self?.delegate?.getUsers(users)
+                callback(users)
+            }
+            catch {
+                 print(error)
+            }
+        }
+        task.resume()
+    }
+    
+    func billsRequest(_ user: User, callback: @escaping ([Bill]) -> Void){
+        guard let url = URL(string: "https://my-bankproj-api.herokuapp.com/users") else { return }
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let data = data, error == nil else { return }
+            do {
+                let users = try JSONDecoder().decode([User].self, from: data)
+                if user.id == 1 {
+                    callback(users[0].bills)
+                } else if user.id == 2 {
+                    callback(users[1].bills)
+                }
             }
             catch {
                  print(error)

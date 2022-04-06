@@ -8,68 +8,54 @@
 import Foundation
 import UIKit
 
-protocol LoginPresenterDelegate: NSObjectProtocol {
+protocol LoginPresenterDelegate: AnyObject {
     func hasUser(_ hasUser: Bool, _ user: User?)
     func showAlert(_ message: String)
 }
 
 protocol LoginPresenterDataSource {
-    func usersRequest()
+    func usersRequest(callback: @escaping ([User]) -> Void)
 }
 
-typealias LoginPresentDelegate = LoginPresenterDelegate & UIViewController
-typealias LoginPresentDataSource = LoginPresenterDataSource & UIViewController
-
-class LoginPresenter: ApiDataSource, LoginProtocol {
+class LoginPresenter: LoginProtocol {
     
-    weak var delegate: LoginPresentDelegate?
-    weak var dataSource: LoginPresentDataSource?
-    //let api = APIService()
-    var allUsers: [User]
+    weak var viewController: LoginPresenterDelegate?
+    var dataSource: LoginPresenterDataSource?
+    var allUsers: [User]?
     
     init(users: [User]){
         self.allUsers = users
+        self.dataSource = APIService()
     }
     
-    func setViewDelegate(delegate: LoginPresentDelegate) {
-        self.delegate = delegate
+    func setViewDelegate(delegate: LoginPresenterDelegate) {
+        self.viewController = delegate
     }
     
-    func getLogin(){
-        dataSource?.usersRequest()
+    func getLogin() -> [User]{
         print("entrei no getLogin")
-
-//        guard let url = URL(string: "https://my-bankproj-api.herokuapp.com/users") else { return }
-//        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-//            guard let data = data, error == nil else { return }
-//            do {
-//                self?.allUsers = try JSONDecoder().decode([User].self, from: data)
-//
-//            }
-//            catch {
-//                 print(error)
-//            }
-//        }
-//        task.resume()
+        
+        dataSource?.usersRequest(callback: { users in
+            self.allUsers = users
+        })
+        
+        return allUsers!
+        //return allUsers?[0].name == "Sayuri Hioki" ? true : false
     }
     
-    func getUsers(_ users: [User]) {
-        print(users[0].name)
-        self.allUsers = users
-    }
-    
-    func verifyLogin(_ user: String, _ password: String){
+    func verifyLogin(_ user: String, _ password: String) -> String{
         var validation = false
         var currentUser: User?
         
-        for i in 0...allUsers.count - 1{
-            if user == allUsers[i].email && password == allUsers[i].password || user == allUsers[i].cpf && password == allUsers[i].password  {
+        for i in 0...allUsers!.count - 1{
+            if user == allUsers![i].email && password == allUsers![i].password || user == allUsers![i].cpf && password == allUsers![i].password  {
                 validation = true
-                currentUser = allUsers[i]
+                currentUser = allUsers![i]
             }
         }
+        viewController?.hasUser(validation, currentUser)
         
-        delegate?.hasUser(validation, currentUser)
+        return currentUser!.name
         
         /*let pw = NSPredicate(format: "SELF MATCHES %@ ", "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z]).{6,}$")
         if user != "_" && password != "_" {

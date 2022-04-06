@@ -8,46 +8,48 @@
 import Foundation
 import UIKit
 
-protocol BankPresenterDelegate {
+protocol HomePresenterDelegate: AnyObject {
     func presentBills(bills: [Bill])
     func showAlert(_ title: String, _ message: String)
 }
 
-typealias HomePresenterDelegate = BankPresenterDelegate & UIViewController
+protocol HomePresenterDataSource {
+    func billsRequest(_ user: User, callback: @escaping ([Bill]) -> Void)
+}
 
 class HomePresenter: HomeProtocol {
     
-    weak var delegate: HomePresenterDelegate?
+    weak var viewController: HomePresenterDelegate?
+    var dataSource: HomePresenterDataSource?
+    var billsArray: [Bill]?
     
-    public func getBills(_ user: User){
-        guard let url = URL(string: "https://my-bankproj-api.herokuapp.com/users") else { return }
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data = data, error == nil else { return }
-            do {
-                let users = try JSONDecoder().decode([User].self, from: data)
-                if user.id == 1 {
-                self?.delegate?.presentBills(bills: users[0].bills)
-                } else if user.id == 2 {
-                    self?.delegate?.presentBills(bills: users[1].bills)
-                }
-            }
-            catch {
-                 print(error)
-            }
-        }
-        task.resume()
+    init(){
+        self.dataSource = APIService()
+    }
+    
+    public func getBills(_ user: User) -> [Bill]{
+        dataSource?.billsRequest(user, callback: { bill in
+            self.viewController?.presentBills(bills: bill)
+            self.billsArray = bill
+        })
+        return billsArray!
     }
     
     public func setViewDelegate(delegate: HomePresenterDelegate) {
-        self.delegate = delegate
+        self.viewController = delegate
     }
     
-    func didTap(_ bill: Bill){
+    func didTap(_ bill: Bill) -> Bool{
         print("entrei")
-        let title = bill.name!
+        var title = ""
+        title = bill.name!
         let message = "\(bill.name!) está em R$\(bill.value!)"
         
-        delegate?.showAlert(title, message)
+        viewController?.showAlert(title, message)
+        
+        let validation = title == "" ? false : true
+        
+        return validation
     }
     
     public func formatAcc(_ accNumber: String) -> String{
